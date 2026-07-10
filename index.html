@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OKD PREMIUM LIVE — Standalone Core TV</title>
+<title>OKD PREMIUM LIVE — Hybrid Terminal v2</title>
 <!-- Tailwind CSS v4 -->
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <!-- FontAwesome Icons -->
@@ -66,7 +66,7 @@
   <nav id="navbar" class="fixed top-0 left-0 right-0 flex items-center justify-between px-[6%] py-5 z-40 transition-all duration-500">
     <div class="flex items-center gap-10">
       <h1 class="font-display text-xl font-bold tracking-tight flex items-center gap-2">
-        OKD PREMIUM <span class="text-[10px] bg-neutral-900 dark:bg-white dark:text-black font-sans font-bold text-white px-2 py-0.5 rounded-full tracking-wider">V1</span>
+        OKD PREMIUM <span class="text-[10px] bg-neutral-900 dark:bg-white dark:text-black font-sans font-bold text-white px-2 py-0.5 rounded-full tracking-wider">LIVE V2</span>
       </h1>
     </div>
     
@@ -86,10 +86,10 @@
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
-        <span class="text-[10px] font-bold tracking-widest uppercase text-neutral-500">Standalone App Player Mode</span>
+        <span class="text-[10px] font-bold tracking-widest uppercase text-neutral-500">Hybrid Terminal Connected</span>
       </div>
       <h2 class="font-display text-4xl md:text-6xl font-bold mb-4 tracking-tighter leading-[0.95]">
-      OKD STREAM  <br><span class="opacity-50 font-light">IPTV STREAMING SERVICE</span>
+        TV & CRICKET <br><span class="opacity-50 font-light">සජීවී විකාශන පද්ධතිය.</span>
       </h2>
     </div>
   </div>
@@ -98,7 +98,7 @@
   <main class="relative z-20 px-[6%] pb-24">
     <div class="flex items-center justify-between mb-8 border-b pb-4 border-neutral-200/60 dark:border-neutral-800">
       <div class="flex items-center gap-3">
-        <span class="font-display text-xl font-bold tracking-tight">Active Channels</span>
+        <span class="font-display text-xl font-bold tracking-tight">All Stations</span>
         <span id="totalCount" class="text-[10px] font-bold bg-neutral-200/60 dark:bg-neutral-800 px-2.5 py-0.5 rounded-full font-mono">0</span>
       </div>
     </div>
@@ -130,7 +130,7 @@
         </div>
       </div>
 
-      <!-- VIDEO CORE FRAME -->
+      <!-- VIDEO CORE FRAME FOR INSTANT FULLSCREEN -->
       <div id="videoContainer" class="relative aspect-video bg-neutral-950 flex items-center justify-center group overflow-hidden">
         
         <!-- Floating Loading Spinner -->
@@ -141,10 +141,10 @@
         <!-- HLS Native Video Node -->
         <video id="video" class="w-full h-full object-contain z-10" autoplay playsinline crossorigin="anonymous" style="display: none;"></video>
         
-        <!-- YouTube Embed Node -->
-        <iframe id="youtubePlayer" class="w-full h-full z-10" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display: none;"></iframe>
+        <!-- Web Embed/YouTube Core Node (For YT and Cricket Frame Links) -->
+        <iframe id="webPlayer" class="w-full h-full z-10" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display: none;"></iframe>
         
-        <!-- CUSTOM CONTROLS OVERLAY -->
+        <!-- CUSTOM CONTROLS OVERLAY (Only for M3U8 Native Streams) -->
         <div id="customControls" class="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 flex flex-col gap-3 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
           <div class="flex items-center justify-between text-white px-2">
             <div class="flex items-center gap-5">
@@ -154,7 +154,7 @@
                 <input id="volumeSlider" type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="w-0 group-hover/vol:w-16 transition-all duration-300 accent-white h-1 rounded-full appearance-none bg-white/30 cursor-pointer">
               </div>
             </div>
-            <div class="text-[10px] font-black tracking-[0.3em] uppercase opacity-70 font-display">OKD WEB PLAYER</div>
+            <div class="text-[10px] font-black tracking-[0.3em] uppercase opacity-70 font-display">OKD HYBRID HUB</div>
             <div class="flex items-center gap-5">
               <button onclick="triggerPiP()" title="Picture-in-Picture" class="hover:text-blue-400 text-base transition cursor-pointer"><i class="fa-solid fa-window-restore"></i></button>
               <button onclick="toggleFullscreen()" title="Fullscreen" class="hover:text-emerald-400 text-base transition cursor-pointer"><i class="fa-solid fa-expand"></i></button>
@@ -166,45 +166,53 @@
       <!-- Footer Panel -->
       <div class="px-7 py-4 text-xs text-neutral-400 flex justify-between items-center border-t border-neutral-200/40 dark:border-neutral-800/60 bg-neutral-50/50 dark:bg-neutral-900/20">
         <span id="modalStatus" class="flex items-center gap-2 font-medium"><i class="fa-solid fa-circle-notch animate-spin text-emerald-500"></i> Ready</span>
-        <span class="tracking-widest text-[9px] bg-emerald-500 text-white px-3 py-1 rounded-full font-mono font-bold">DIRECT HARDWARE LINK</span>
+        <span class="tracking-widest text-[9px] bg-emerald-500 text-white px-3 py-1 rounded-full font-mono font-bold">DIRECT RAW PIPELINE</span>
       </div>
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer class="border-t border-neutral-200/60 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-[6%] py-10 text-xs font-medium text-neutral-400 flex flex-col sm:flex-row justify-between items-center gap-4">
-    <span>&copy; 2026 OKD LANKA . Unrestricted Standalone Engine.</span>
+    <span>&copy; 2026 OKD TV terminal. Unrestricted Media Framework.</span>
   </footer>
 
 <script>
-// 🔒 100% Direct Links (VLC Style - Play perfectly when run as a Local File)
 const channels = [
+  // 🏏 9 Cricket Stream Node Links Added Successfully
+  { name: "ThePapare 1HD",      tag: "🏏 CRICKET", url: "https://livecricketsl.cc.nf/livecricket/alt.php?id=papare1" },
+  { name: "Star Sport 1HD",     tag: "🏏 CRICKET", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=starsp1hd" },
+  { name: "Star Sport 1",       tag: "🏏 CRICKET", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=starsp1" },
+  { name: "Star Sport 2",       tag: "🏏 CRICKET", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=starsp2" },
+  { name: "Prime Stream",       tag: "🏏 CRICKET · VPN", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=prime3" },
+  { name: "Willow by Cricbuzz",  tag: "🏏 CRICKET · VPN", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=willow2" },
+  { name: "Sky Sports 4K",      tag: "🏏 CRICKET · VPN", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=skynz1" },
+  { name: "Willow Cricket",     tag: "🏏 CRICKET · VPN", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=phd" },
+  { name: "Hub Sports 4",       tag: "🏏 CRICKET · VPN", url: "https://livecricketsl.cc.nf/livecricket/sports.php?id=hubsports4" },
+
+  // 📺 Original 18 HLS & YouTube Channels
   { name:"Siyatha TV",      tag:"HLS Broadcast", url:"https://rtmp01.voaplus.com/hls/6x6ik312qk4grfxocfcv.m3u8" },
   { name:"Veruban TV",      tag:"HLS Broadcast", url:"https://video-eu1.streamerr.co/hls/scb80244b91/live.m3u8" },
   { name:"Talent Tv",       tag:"HLS Broadcast", url:"https://cast.talenttv.lk/hls/mcrlo1ygwpu8x4bj/index.m3u8" },
   { name:"NDTV LANKA",      tag:"HLS Broadcast", url:"https://g4wlkqqwl23a-hls-live.5centscdn.com/NDTVLANKA/1ff5fa54d14c3ff6c6bd3918bbb7db5d.sdp/playlist.m3u8" },
-   
   { name:"Jaya TV",         tag:"HLS Broadcast", url:"https://live.jayatv.lk/hls/stream.m3u8" },
-  { name:"Hiru Tv",         tag:"HLS Broadcast", url:"https://str001.peotv.lk/live2/hiru/stream_0/index.m3u8" },
+  { name:"Hiru Tv",         tag:"HLS Broadcast", url:"https://tv.hiruhost.com:1936/8012/8012/playlist.m3u8" },
   { name:"Karama TV",       tag:"YouTube Live",  url:"https://www.youtube.com/watch?v=8xfN8FLGRRU" },
   { name:"Pragana Tv",      tag:"YouTube Live",  url:"https://www.youtube.com/watch?v=76QGhfJgmE0" },
   { name:"The Buddist",     tag:"YouTube Live",  url:"https://www.youtube.com/watch?v=_cU58xfB2co" },
-  { name:"Shraddha TV Live Stream",     tag:"YouTube Live",  url:"https://www.youtube.com/watch?v=GwklyN7DAok" },
-  { name:"Sirasa Tv",       tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live2/sirasa/stream_0/index.m3u8" },
-  { name:"Ada Derana ",       tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live/ada-derana-24/stream_0/index.m3u8" },
-  { name:"Charana Tv",      tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live2/charana/stream_0/index.m3u8" },
-  { name:"Derana TV",       tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live2/derana/stream_0/index.m3u8" },
-  { name:"Swaranawahini",   tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live2/swarnawahini/stream_0/index.m3u8" },
-  { name:"ITN",             tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live2/itn/stream_0/index.m3u8" },
-  { name:"Rupawahini",      tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live2/rupavahini/stream_0/index.m3u8" },
-  { name:"TV Supreme",      tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live/tv-supreme/stream_0/index.m3u8" },
-  { name:"Event Tv",        tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live2/event-tv/stream_0/index.m3u8" },
-  { name:"Haritha TV",      tag:"PeoTV Stream",  url:"https://str001.peotv.lk/live/haritha-tv/stream_0/index.m3u8" }
+  { name:"Sirasa Tv",       tag:"PeoTV Core",    url:"https://str001.peotv.lk/live2/sirasa/stream_0/index.m3u8" },
+  { name:"Charana Tv",      tag:"PeoTV Core",    url:"https://str001.peotv.lk/live2/charana/stream_0/index.m3u8" },
+  { name:"Derana TV",       tag:"PeoTV Core",    url:"https://str001.peotv.lk/live2/derana/stream_0/index.m3u8" },
+  { name:"Swaranawahini",   tag:"PeoTV Core",    url:"https://str001.peotv.lk/live2/swarnawahini/stream_0/index.m3u8" },
+  { name:"ITN",             tag:"PeoTV Core",    url:"https://str001.peotv.lk/live2/itn/stream_0/index.m3u8" },
+  { name:"Rupawahini",      tag:"PeoTV Core",    url:"https://str001.peotv.lk/live2/rupavahini/stream_0/index.m3u8" },
+  { name:"TV Supreme",      tag:"PeoTV Core",    url:"https://str001.peotv.lk/live/tv-supreme/stream_0/index.m3u8" },
+  { name:"Event Tv",        tag:"PeoTV Core",    url:"https://str001.peotv.lk/live2/event-tv/stream_0/index.m3u8" },
+  { name:"Haritha TV",      tag:"PeoTV Core",    url:"https://str001.peotv.lk/live/haritha-tv/stream_0/index.m3u8" }
 ];
 
 const verticalBentoGrid = document.getElementById('verticalBentoGrid');
 const video = document.getElementById('video');
-const youtubePlayer = document.getElementById('youtubePlayer');
+const webPlayer = document.getElementById('webPlayer');
 const videoContainer = document.getElementById('videoContainer');
 const customControls = document.getElementById('customControls');
 const playerModal = document.getElementById('playerModal');
@@ -218,7 +226,7 @@ let hls = null;
 let activeCard = null;
 let currentChannelData = null;
 
-// Clean Right Click & Key Blocks
+// Clean Inspectors Block
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', e => {
   if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
@@ -259,13 +267,13 @@ function createCard(ch, i) {
   card.innerHTML = `
     <div class="w-full h-full flex flex-col justify-between p-6 relative z-10">
       <div class="flex justify-between items-center">
-        <span class="text-[9px] font-bold font-mono tracking-wider opacity-40">STATION ${String(i+1).padStart(2,'0')}</span>
+        <span class="text-[9px] font-bold font-mono tracking-wider opacity-50 px-2 py-0.5 rounded-sm bg-neutral-200/50 dark:bg-neutral-800/50">${ch.tag.toUpperCase()}</span>
         <div class="w-1.5 h-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700 group-hover:bg-neutral-900 dark:group-hover:bg-white transition-all duration-300"></div>
       </div>
       <div>
         <div class="font-display text-base font-bold tracking-tight">${ch.name}</div>
         <div class="text-[11px] opacity-50 font-semibold mt-0.5 tracking-wide flex items-center gap-1.5">
-          <span class="w-1 h-1 ${ch.url.includes('youtube.com') || ch.url.includes('youtu.be') ? 'bg-red-500' : 'bg-emerald-500'} rounded-full"></span> Standalone Mode
+          <span class="w-1.5 h-1.5 rounded-full ${ch.tag.includes('CRICKET') ? 'bg-amber-500 animate-pulse' : (ch.url.includes('youtube.com') ? 'bg-red-500' : 'bg-emerald-500')}"></span> Live Hub
         </div>
       </div>
     </div>
@@ -296,39 +304,49 @@ function triggerPlayer(ch, card) {
     modalBox.style.opacity = '1';
     modalBox.style.transform = 'scale(1)';
     
-    // 🔥 INSTANT FULLSCREEN INVOCATION
+    // 🔥 FORCED INSTANT FULLSCREEN LAYER ACTIVE
     if (videoContainer.requestFullscreen) {
-      videoContainer.requestFullscreen().catch(() => console.log("Fullscreen skipped"));
+      videoContainer.requestFullscreen().catch(() => console.log("Fullscreen request deferred."));
     } else if (videoContainer.webkitRequestFullscreen) {
       videoContainer.webkitRequestFullscreen();
     }
   }, 50);
   
-  executeStreamPipeline(ch.url, ch.name);
+  executeStreamPipeline(ch.url, ch.name, ch.tag);
 }
 
-function executeStreamPipeline(url, name) {
+function executeStreamPipeline(url, name, tag) {
   modalLoader.style.opacity = '1';
-  modalTitle.textContent = `${name} — Direct Stream Node`;
+  modalTitle.textContent = `${name} — Direct Node`;
   
   const ytId = getYoutubeId(url);
 
-  if (ytId) {
+  // 🏏 CASE 1: WEB INTERCEPTOR (For Cricket PHP Links and YouTube Embeds)
+  if (tag.includes('CRICKET') || ytId) {
     video.style.display = 'none';
     customControls.style.display = 'none';
-    youtubePlayer.style.display = 'block';
+    webPlayer.style.display = 'block';
     
-    youtubePlayer.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&controls=1&rel=0&showinfo=0&modestbranding=1`;
-    modalStatus.innerHTML = `<span class="text-red-500 font-bold"><i class="fa-brands fa-youtube mr-1.5"></i> YouTube Feed Active</span>`;
+    if (ytId) {
+      webPlayer.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&controls=1&rel=0&showinfo=0&modestbranding=1`;
+      modalStatus.innerHTML = `<span class="text-red-500 font-bold"><i class="fa-brands fa-youtube mr-1"></i> YouTube Engine Synchronized</span>`;
+    } else {
+      // Direct inject for Cricket Frame Pages
+      webPlayer.src = url;
+      modalStatus.innerHTML = `<span class="text-amber-500 font-bold"><i class="fa-solid fa-baseball-bat-ball mr-1"></i> Live Cricket Stream Route Secure</span>`;
+    }
     
-    setTimeout(() => { modalLoader.style.opacity = '0'; }, 800);
-  } else {
-    youtubePlayer.style.display = 'none';
+    setTimeout(() => { modalLoader.style.opacity = '0'; }, 1000);
+  } 
+  
+  // 🟢 CASE 2: NATIVE IPTV / PEOTV STREAMS (.m3u8)
+  else {
+    webPlayer.style.display = 'none';
     video.style.display = 'block';
     customControls.style.display = 'flex';
-    youtubePlayer.src = ""; 
+    webPlayer.src = ""; // Flush buffer
     
-    modalStatus.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin text-neutral-400 mr-2"></i> Initializing Hardware Link...`;
+    modalStatus.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin text-neutral-400 mr-2"></i> Synced with raw layer data...`;
 
     if(hls) { hls.destroy(); hls = null; }
 
@@ -342,14 +360,14 @@ function executeStreamPipeline(url, name) {
       
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         video.play().catch(() => {
-          modalStatus.innerHTML = `<span class="text-amber-500">Tap screen to play.</span>`;
+          modalStatus.innerHTML = `<span class="text-amber-500">Auto-play restricted. Tap frame area.</span>`;
           modalLoader.style.opacity = '0';
         });
       });
 
       hls.on(Hls.Events.ERROR, (event, data) => {
         if (data.fatal) {
-          modalStatus.innerHTML = `<span class="text-rose-500"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Stream linking dropped. Hit Re-Sync.</span>`;
+          modalStatus.innerHTML = `<span class="text-rose-500"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Linking error. Hit Re-Sync button.</span>`;
           modalLoader.style.opacity = '0';
         }
       });
@@ -358,7 +376,7 @@ function executeStreamPipeline(url, name) {
     video.onplaying = () => {
       modalLoader.style.opacity = '0';
       document.getElementById('playIcon').className = 'fa-solid fa-pause';
-      modalStatus.innerHTML = `<span class="text-emerald-500 font-bold flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Direct Hardware Connected</span>`;
+      modalStatus.innerHTML = `<span class="text-emerald-500 font-bold flex items-center gap-2"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Raw Media Engine Active</span>`;
     };
 
     video.onloadeddata = () => { modalLoader.style.opacity = '0'; };
@@ -394,7 +412,7 @@ function toggleFullscreen() {
 }
 
 function reSyncStream() {
-  if (currentChannelData) executeStreamPipeline(currentChannelData.url, currentChannelData.name);
+  if (currentChannelData) executeStreamPipeline(currentChannelData.url, currentChannelData.name, currentChannelData.tag);
 }
 
 function closePlayer() {
@@ -402,7 +420,7 @@ function closePlayer() {
   
   video.pause();
   video.src = "";
-  youtubePlayer.src = "";
+  webPlayer.src = "";
   if(hls) { hls.destroy(); hls = null; }
   
   modalBox.style.transform = 'scale(0.95)';
